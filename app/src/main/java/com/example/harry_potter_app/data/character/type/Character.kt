@@ -6,4 +6,5 @@ data class Character(
     val image: String,
     val interpretedBy: String,
     val nickname: String,
+    val index: Int,
 )

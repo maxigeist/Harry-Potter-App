@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import com.example.harry_potter_app.data.character.type.Character
+import com.example.harry_potter_app.data.fetchCharactersFromApi
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -36,11 +37,9 @@ class CharacterDataViewModel @Inject constructor(
     }
 
 
-
     private fun fetchCharacters() {
         _loadingCharacters.value = true
-        apiServiceImpl.getCharacters(
-            context = context,
+        fetchCharactersFromApi(
             onSuccess = {
                 viewModelScope.launch {
                     _characters.emit(it)
@@ -52,7 +51,8 @@ class CharacterDataViewModel @Inject constructor(
             },
             loadingFinished = {
                 _loadingCharacters.value = false
-            }
+            },
+            context = context
         )
     }
 

@@ -30,7 +30,7 @@ class ApiServiceImpl @Inject constructor() {
 
         val service: ApiService = retrofit.create(ApiService::class.java)
 
-        val call: Call<List<Character>> = service.getRanking()
+        val call: Call<List<Character>> = service.getCharacters()
 
         call.enqueue(object : Callback<List<Character>> {
             override fun onResponse(response: Response<List<Character>>?, retrofit: Retrofit?) {

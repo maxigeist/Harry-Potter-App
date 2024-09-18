@@ -28,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import com.example.harry_potter_app.R
+import com.example.harry_potter_app.data.favorite.manager.FavoriteViewModel
 import com.example.harry_potter_app.ui.theme.Pink40
 import com.example.harry_potter_app.ui.theme.PurpleGrey40
 import com.example.harry_potter_app.ui.theme.PurpleGrey80

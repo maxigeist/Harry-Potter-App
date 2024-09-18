@@ -7,5 +7,5 @@ import com.example.harry_potter_app.data.character.type.Character
 interface ApiService {
 
     @GET("characters")
-    fun getRanking(): Call<List<Character>>
+    fun getCharacters(): Call<List<Character>>
 }
