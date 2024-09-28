@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
 import com.example.harry_potter_app.data.character.type.Character
 import com.example.harry_potter_app.data.fetchCharactersFromApi
+import com.example.harry_potter_app.remote.storage.FavoriteCharacter
+import com.example.harry_potter_app.remote.storage.HarryPotterDatabase
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -27,6 +29,9 @@ class CharacterDataViewModel @Inject constructor(
 
     private val _showRetry = MutableStateFlow(false)
     val showRetry = _showRetry.asStateFlow()
+
+
+    private val harryPotterDatabase = HarryPotterDatabase.getDatabase(context)
 
     init {
         fetchCharacters()
@@ -56,7 +61,10 @@ class CharacterDataViewModel @Inject constructor(
         )
     }
 
-    fun addCharacterToFavorites(character: Character) {
-        //TODO add character to favorites
+    fun addCharacterToFavorites(characterIndex: Int) {
+        viewModelScope.launch {
+            harryPotterDatabase.favoriteCharacterDao()
+                .insert(FavoriteCharacter(index = characterIndex))
+        }
     }
 }

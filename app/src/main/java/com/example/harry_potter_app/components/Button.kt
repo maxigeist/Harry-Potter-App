@@ -30,7 +30,7 @@ fun Button(buttonData: ButtonData){
         colors = ButtonDefaults.buttonColors(containerColor = Pink80)
     ) {
         Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.fillMaxWidth(),
         ) {

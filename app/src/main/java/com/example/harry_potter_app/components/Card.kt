@@ -27,6 +27,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -48,25 +50,20 @@ fun Card(cardData: CardData) {
             modifier = Modifier
                 .fillMaxWidth(0.4f)
                 .fillMaxHeight(0.4f)
-                .clip(RoundedCornerShape(28.dp))  // Clip the column with rounded corners
+                .padding(0.dp)
+                .clip(RoundedCornerShape(16.dp))  // Clip the column with rounded corners
                 .background(MaterialTheme.colorScheme.secondary),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                text = cardData.title,
-                modifier = Modifier.padding(8.dp),
-                fontSize = 22.sp,
-                color = Color.White
-            )
             Box(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(0.dp)
             ) {
                 AsyncImage(
                     model = cardData.imgUrl,
                     modifier = Modifier
-                        .size(300.dp)  // Set a fixed size for all images
+                        .size(240.dp)  // Set a fixed size for all images
                         .clip(RoundedCornerShape(8.dp)),// Optional: Add some rounding to the corners
                     contentDescription = "Image for ${cardData.title}",
                     contentScale = ContentScale.Fit,
@@ -74,6 +71,15 @@ fun Card(cardData: CardData) {
                     error = painterResource(R.drawable.ic_launcher_background),
                 )
             }
+            Text(
+                text = cardData.title,
+                modifier = Modifier.padding(8.dp),
+                fontSize = 40.sp,
+                fontFamily = FontFamily(
+                    Font(R.font.harry)
+                ),
+                color = Color.White
+            )
         }
     }
 }
