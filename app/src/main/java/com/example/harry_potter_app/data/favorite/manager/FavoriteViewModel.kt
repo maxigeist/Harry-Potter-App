@@ -8,10 +8,13 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.harry_potter_app.data.character.type.Character
 import com.example.harry_potter_app.data.fetchCharactersFromApi
+import com.example.harry_potter_app.data.fetchHousesFromApi
+import com.example.harry_potter_app.data.house.type.House
 import com.example.harry_potter_app.local.storage.PreferencesKeys
 import com.example.harry_potter_app.local.storage.dataStore
 import com.example.harry_potter_app.local.storage.getFromDataStore
 import com.example.harry_potter_app.local.storage.saveToDataStore
+import com.example.harry_potter_app.remote.storage.FavoriteCharacter
 import com.example.harry_potter_app.remote.storage.HarryPotterDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -33,16 +36,44 @@ class FavoriteViewModel @Inject constructor(
     val favoriteCharacters = _favoriteCharacters.asStateFlow()
     private var _favoriteBooks = MutableStateFlow("")
     val favoriteBooks = _favoriteBooks.asStateFlow()
-    private var _favoriteHouses = MutableStateFlow("")
+
+    private var _favoriteHouses = MutableStateFlow(listOf<House>())
     val favoriteHouses = _favoriteHouses.asStateFlow()
+
+    private val _loadingFavorites = MutableStateFlow(false)
+    val loadingFavorites = _loadingFavorites.asStateFlow()
+
+    private val _showRetry = MutableStateFlow(false)
+    val showRetry = _showRetry.asStateFlow()
 
     init {
         getFavoriteCharacters()
+        getFavoriteHouses()
     }
 
 
+    private fun getFavoriteHouses() {
+        _loadingFavorites.value = true
+        viewModelScope.launch {
+            val favoriteHousesIndexes = getFavoriteHousesIndexesFromRemoteStorage().firstOrNull() ?: listOf()
+            fetchHousesFromApi(
+                onSuccess = { houses ->
+                    _favoriteHouses.value =
+                        houses.filter { house -> favoriteHousesIndexes.contains(house.index) }
+                },
+                onFail = {
+                    _showRetry.value = true
+                },
+                loadingFinished = {
+                    _loadingFavorites.value = false
+                },
+                context = context
+            )
+        }
+    }
+
     private fun getFavoriteCharacters() {
-        // Launch a coroutine to collect the Flow from the remote storage
+        _loadingFavorites.value = true
         viewModelScope.launch {
             val favoriteCharactersIndexes = getFavoriteCharactersIndexesFromRemoteStorage().firstOrNull() ?: listOf()
 
@@ -52,20 +83,34 @@ class FavoriteViewModel @Inject constructor(
                         characters.filter { character -> favoriteCharactersIndexes.contains(character.index) }
                 },
                 onFail = {
-                    _favoriteCharacters.value = listOf()
+                    _showRetry.value = true
                 },
                 loadingFinished = {
-                    // Do nothing
+                    _loadingFavorites.value = false
                 },
                 context = context
             )
         }
     }
 
-
-
     private fun getFavoriteCharactersIndexesFromRemoteStorage(): Flow<List<Int>> {
         return harryPotterDatabase.favoriteCharacterDao().getAllCharacters().asFlow()
+    }
+
+    private fun getFavoriteHousesIndexesFromRemoteStorage(): Flow<List<Int>> {
+        return harryPotterDatabase.favoriteHouseDao().getAllHouses().asFlow()
+    }
+
+    fun removeCharacterFromFavorites(characterIndex: Int) {
+        viewModelScope.launch {
+            harryPotterDatabase.favoriteCharacterDao().delete(FavoriteCharacter(index = characterIndex))
+            getFavoriteCharacters()
+        }
+    }
+
+    fun retryGetFavorites() {
+        getFavoriteCharacters()
+        getFavoriteHouses()
     }
 
 }

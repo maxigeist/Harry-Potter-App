@@ -4,7 +4,7 @@ enum class HarryPotterScreen {
     Characters,
     Books,
     Houses,
-    Settings,
+    Favorites
 
 }
 
@@ -12,4 +12,5 @@ val basePages = listOf(
     HarryPotterScreen.Characters.name,
     HarryPotterScreen.Books.name,
     HarryPotterScreen.Houses.name,
+    HarryPotterScreen.Favorites.name,
 )

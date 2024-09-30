@@ -1,9 +1,13 @@
 package com.example.harry_potter_app.data.character.manager
 
 import android.content.Context
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.harry_potter_app.api.manager.ApiServiceImpl
+import com.example.harry_potter_app.components.Toast
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import javax.inject.Inject
@@ -18,26 +22,25 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class CharacterDataViewModel @Inject constructor(
     @ApplicationContext private val context: Context,
-    private val apiServiceImpl: ApiServiceImpl
 ) : ViewModel() {
-
-    private val _loadingCharacters = MutableStateFlow(false)
-    val loadingCharacters = _loadingCharacters.asStateFlow()
 
     private val _characters = MutableStateFlow(listOf<Character>())
     val characters = _characters.asStateFlow()
 
+    private val _loadingCharacters = MutableStateFlow(false)
+    val loadingCharacters = _loadingCharacters.asStateFlow()
+
     private val _showRetry = MutableStateFlow(false)
     val showRetry = _showRetry.asStateFlow()
 
-
+    private val toast = Toast(context)
     private val harryPotterDatabase = HarryPotterDatabase.getDatabase(context)
 
     init {
         fetchCharacters()
     }
 
-    fun retryLoadingRanking() {
+    fun retryGettingCharacters() {
         fetchCharacters()
     }
 
@@ -47,7 +50,13 @@ class CharacterDataViewModel @Inject constructor(
         fetchCharactersFromApi(
             onSuccess = {
                 viewModelScope.launch {
-                    _characters.emit(it)
+                    getFavoriteCharacters().asFlow().collect { favoriteCharacters ->
+                        val characters = it.map { character ->
+                            character.favorite = favoriteCharacters.contains(character.index)
+                            character
+                        }
+                        _characters.emit(characters)
+                    }
                 }
                 _showRetry.value = false
             },
@@ -65,6 +74,22 @@ class CharacterDataViewModel @Inject constructor(
         viewModelScope.launch {
             harryPotterDatabase.favoriteCharacterDao()
                 .insert(FavoriteCharacter(index = characterIndex))
+            toast.makeToast("Added character to favorites")
+            retryGettingCharacters()
         }
+
     }
+
+    fun removeCharacterFromFavorites(characterIndex: Int) {
+        viewModelScope.launch {
+            harryPotterDatabase.favoriteCharacterDao()
+                .delete(FavoriteCharacter(index = characterIndex))
+            toast.makeToast("Removed character from favorites")
+            retryGettingCharacters()
+        }
+
+    }
+
+
+    private fun getFavoriteCharacters() : LiveData<List<Int>> = harryPotterDatabase.favoriteCharacterDao().getAllCharacters()
 }

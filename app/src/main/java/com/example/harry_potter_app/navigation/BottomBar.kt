@@ -3,8 +3,10 @@ package com.example.harry_potter_app.navigation
 import androidx.compose.material.icons.Icons
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.outlined.Build
+import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,8 +33,8 @@ fun BottomBar(
     val charactersTab = TabBarItem(title = HarryPotterScreen.Characters.name, selectedIcon = ImageVector.vectorResource(R.drawable.filledwizard), unselectedIcon = ImageVector.vectorResource(R.drawable.outlinewizard))
     val housesTab = TabBarItem(title = HarryPotterScreen.Houses.name, selectedIcon = ImageVector.vectorResource(R.drawable.filledhouse), unselectedIcon = ImageVector.vectorResource(R.drawable.outlinedhouse))
     val booksTab = TabBarItem(title = HarryPotterScreen.Books.name, selectedIcon = ImageVector.vectorResource(R.drawable.filledbook), unselectedIcon = ImageVector.vectorResource(R.drawable.outlinedbook))
-
-    val tabBarItems = listOf(charactersTab, housesTab, booksTab)
+    val favoritesTab = TabBarItem(title = HarryPotterScreen.Favorites.name, selectedIcon = ImageVector.vectorResource(R.drawable.filledheart), unselectedIcon = ImageVector.vectorResource(R.drawable.outlinedheart))
+    val tabBarItems = listOf(charactersTab, housesTab, booksTab, favoritesTab)
 
     TabView(tabBarItems, onNavigate)
 }

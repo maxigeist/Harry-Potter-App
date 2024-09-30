@@ -55,24 +55,6 @@ fun Home() {
     Surface(
         modifier = Modifier.fillMaxSize()
     ) {
-        val cardDataList = listOf(
-            CardData("Harry", "https://raw.githubusercontent.com/fedeperin/potterapi/main/public/images/characters/harry_potter.png", onClick = {}),
-            CardData("Hermione", "https://raw.githubusercontent.com/fedeperin/potterapi/main/public/images/characters/hermione_granger.png", onClick = {}),
-            CardData("Ron Weasley", "https://raw.githubusercontent.com/fedeperin/potterapi/main/public/images/characters/ron_weasley.png", onClick = {}),
-            CardData("Fred Weasley", "https://raw.githubusercontent.com/fedeperin/potterapi/main/public/images/characters/fred_weasley.png", onClick = {})
-        )
-
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(12.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(cardDataList) { cardData ->
-                Card(cardData = cardData)
-            }
-        }
     }
     }
 
