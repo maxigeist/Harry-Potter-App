@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.harry_potter_app.tabs.characters.Characters
 import com.example.harry_potter_app.tabs.favorites.Favorites
 import com.example.harry_potter_app.tabs.houses.Houses
+import com.example.harry_potter_app.ui.theme.NavBarButtonsPadding
 
 @Composable
 fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostController) {
@@ -21,7 +21,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding)
-            .padding(horizontal = 10.dp)
+            .padding(horizontal = NavBarButtonsPadding)
     ) {
         composable(route = HarryPotterScreen.Characters.name) {
             Characters()

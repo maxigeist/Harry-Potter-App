@@ -46,9 +46,3 @@ fun Characters() {
 
 
 }
-
-@Composable
-@Preview
-fun PreviewCharacters() {
-    Characters()
-}

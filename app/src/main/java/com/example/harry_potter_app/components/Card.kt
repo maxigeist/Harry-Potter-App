@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -23,10 +22,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.example.harry_potter_app.R
+import com.example.harry_potter_app.ui.theme.CornerShapeRadius
+import com.example.harry_potter_app.ui.theme.EmojiFontSize
+import com.example.harry_potter_app.ui.theme.ImageSize
+import com.example.harry_potter_app.ui.theme.MediumFontSize
+import com.example.harry_potter_app.ui.theme.PaddingSmall
 
 
 data class CardData(
@@ -46,22 +49,18 @@ fun Card(cardData: CardData) {
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth(0.4f)
-                .fillMaxHeight(0.4f)
-                .padding(0.dp)
-                .clip(RoundedCornerShape(16.dp))
+                .clip(RoundedCornerShape(CornerShapeRadius))
                 .background(MaterialTheme.colorScheme.secondary),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
             Box(
                 modifier = Modifier
-                    .padding(0.dp)
             ) {
                 if (cardData.emoji != null) {
                     Text(
                         text = cardData.emoji,
-                        fontSize = 120.sp,
+                        fontSize = EmojiFontSize,
                         fontFamily = FontFamily(
                             Font(R.font.harry)
                         ),
@@ -72,11 +71,11 @@ fun Card(cardData: CardData) {
                     AsyncImage(
                         model = cardData.imgUrl,
                         modifier = Modifier
-                            .size(240.dp)
-                            .clip(RoundedCornerShape(8.dp)),
-                        contentDescription = "Image for ${cardData.title}",
+                            .size(ImageSize)
+                            .clip(RoundedCornerShape(topStart = CornerShapeRadius, topEnd = CornerShapeRadius)),
                         contentScale = ContentScale.Fit,
-                        placeholder = painterResource(R.drawable.ic_launcher_background),
+                        contentDescription = R.string.image_description.toString(),
+                        placeholder = painterResource(R.drawable.outlinewizard),
                         error = painterResource(R.drawable.ic_launcher_background),
                     )
                 }
@@ -88,8 +87,8 @@ fun Card(cardData: CardData) {
             ) {
                 Text(
                     text = cardData.title,
-                    modifier = Modifier.padding(8.dp),
-                    fontSize = 40.sp,
+                    modifier = Modifier.padding(PaddingSmall),
+                    fontSize = MediumFontSize,
                     fontFamily = FontFamily(
                         Font(R.font.harry)
                     ),
@@ -100,13 +99,28 @@ fun Card(cardData: CardData) {
                 ) {
                     Image(
                         painter = painterResource(id = if (cardData.favorite) R.drawable.filledheart else R.drawable.outlinedheart),
-                        contentDescription = "Favorite",
                         modifier = Modifier
                             .background(MaterialTheme.colorScheme.secondary),
+                        contentDescription = R.string.heart_description.toString(),
                     )
                 }
             }
 
         }
     }
+}
+
+@Preview
+@Composable
+fun CardPreview() {
+    Card(
+        cardData = CardData(
+            title = "Harry Potter",
+            imgUrl = "https://hp-api.herokuapp.com/images/harry.jpg",
+            onClick = {},
+            favorite = false,
+            addToFavoriteFunction = {},
+            removeFromFavoriteFunction = {}
+        )
+    )
 }

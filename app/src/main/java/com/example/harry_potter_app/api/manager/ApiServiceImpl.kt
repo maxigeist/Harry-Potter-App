@@ -47,7 +47,7 @@ class ApiServiceImpl @Inject constructor() {
 
             override fun onFailure(t: Throwable?) {
                 val toast = Toast(context)
-                toast.makeToast("Can't get characters")
+                toast.makeToast(context.getString(R.string.cant_get_characters))
                 onFail()
                 loadingFinished()
             }
@@ -87,7 +87,7 @@ class ApiServiceImpl @Inject constructor() {
 
             override fun onFailure(t: Throwable?) {
                 val toast = Toast(context)
-                toast.makeToast("Can't get characters")
+                toast.makeToast(context.getString(R.string.cant_get_houses))
                 onFail()
                 loadingFinished()
             }

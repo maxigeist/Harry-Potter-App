@@ -1,8 +1,6 @@
 package com.example.harry_potter_app.data.favorite.manager
 
 import android.content.Context
-import android.util.Log
-import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
@@ -10,10 +8,6 @@ import com.example.harry_potter_app.data.character.type.Character
 import com.example.harry_potter_app.data.fetchCharactersFromApi
 import com.example.harry_potter_app.data.fetchHousesFromApi
 import com.example.harry_potter_app.data.house.type.House
-import com.example.harry_potter_app.local.storage.PreferencesKeys
-import com.example.harry_potter_app.local.storage.dataStore
-import com.example.harry_potter_app.local.storage.getFromDataStore
-import com.example.harry_potter_app.local.storage.saveToDataStore
 import com.example.harry_potter_app.remote.storage.FavoriteCharacter
 import com.example.harry_potter_app.remote.storage.HarryPotterDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,7 +16,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import kotlinx.coroutines.flow.firstOrNull
 

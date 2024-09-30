@@ -13,9 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0xFF151226),  // Deep Purple
-    secondary = Color(0xFF251C36),  // Gold
-    background = Color(0xFF151226),  // Charcoal
+    primary = Color(0xFF151226),
+    secondary = Color(0xFF251C36),
+    tertiary = Color(0xFF362A50),
+    background = Color(0xFF151226),
     surface = Color(0xFF151226),
     onPrimary = Color.White,
     onSecondary = Color.Black,
