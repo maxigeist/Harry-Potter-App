@@ -19,3 +19,17 @@ interface FavoriteCharacterDao {
     fun getAllCharacters(): LiveData<List<Int>>
 
 }
+
+@Dao
+interface FavoriteHouseDao {
+
+    @Insert
+    suspend fun insert(houseIndex: FavoriteHouse)
+
+    @Delete
+    suspend fun delete(houseIndex: FavoriteHouse)
+
+    @Query("SELECT * FROM FavoriteHouses")
+    fun getAllHouses(): LiveData<List<Int>>
+
+}

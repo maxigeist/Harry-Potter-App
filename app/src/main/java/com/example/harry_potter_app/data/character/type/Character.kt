@@ -7,4 +7,5 @@ data class Character(
     val interpretedBy: String,
     val nickname: String,
     val index: Int,
+    var favorite:Boolean,
 )

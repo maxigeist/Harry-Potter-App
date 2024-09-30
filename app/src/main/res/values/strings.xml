@@ -3,5 +3,7 @@
     <string name="api_url">https://potterapi-fedeperin.vercel.app/en/</string>
     <string name="retry">Try making the request again</string>
     <string name="characters">Characters</string>
+    <string name="favorites">Favorites</string>
+    <string name="houses">Houses</string>
     <string name="retry_load_ranking">Try making the request again</string>
 </resources>
