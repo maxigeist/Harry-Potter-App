@@ -11,7 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.example.harry_potter_app.ui.theme.Pink80
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.tooling.preview.Preview
 
 data class ButtonData(
     val leadingIcon: ImageVector? = null,
@@ -26,8 +27,7 @@ fun Button(buttonData: ButtonData){
         onClick = buttonData.onClick, modifier = Modifier
             .fillMaxWidth()
             .wrapContentHeight(),
-        //para settear el color de un botón
-        colors = ButtonDefaults.buttonColors(containerColor = Pink80)
+        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
     ) {
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -46,4 +46,15 @@ fun Button(buttonData: ButtonData){
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun  ButtonPreview() {
+    Button(
+        buttonData = ButtonData(
+            title = "Button",
+            onClick = {}
+        )
+    )
 }

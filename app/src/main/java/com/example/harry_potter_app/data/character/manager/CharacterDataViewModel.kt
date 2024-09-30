@@ -74,7 +74,7 @@ class CharacterDataViewModel @Inject constructor(
         viewModelScope.launch {
             harryPotterDatabase.favoriteCharacterDao()
                 .insert(FavoriteCharacter(index = characterIndex))
-            toast.makeToast("Added character to favorites")
+            toast.makeToast(context.getString(com.example.harry_potter_app.R.string.added_character_to_favorites))
             retryGettingCharacters()
         }
 
@@ -84,7 +84,7 @@ class CharacterDataViewModel @Inject constructor(
         viewModelScope.launch {
             harryPotterDatabase.favoriteCharacterDao()
                 .delete(FavoriteCharacter(index = characterIndex))
-            toast.makeToast("Removed character from favorites")
+            toast.makeToast(context.getString(com.example.harry_potter_app.R.string.removed_character_from_favorites))
             retryGettingCharacters()
         }
 

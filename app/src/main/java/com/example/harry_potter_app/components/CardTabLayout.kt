@@ -15,9 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.harry_potter_app.R
+import com.example.harry_potter_app.ui.theme.PaddingBig
+import com.example.harry_potter_app.ui.theme.PaddingMedium
+import com.example.harry_potter_app.ui.theme.PaddingSmall
+import com.example.harry_potter_app.ui.theme.TabTitleTextSize
 
 @Composable
 
@@ -50,8 +55,8 @@ fun CardTabLayout(
                 Text(
                     text = stringResource(id = layoutTitleId),
                     modifier = Modifier
-                        .padding(8.dp),
-                    fontSize = 72.sp,
+                        .padding(PaddingSmall),
+                    fontSize = TabTitleTextSize,
                     fontFamily = FontFamily(
                         Font(R.font.harry)
                     ),
@@ -59,9 +64,9 @@ fun CardTabLayout(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
-                    contentPadding = PaddingValues(12.dp),
-                    verticalArrangement = Arrangement.spacedBy(24.dp),
-                    horizontalArrangement = Arrangement.spacedBy(24.dp)
+                    contentPadding = PaddingValues(PaddingMedium),
+                    verticalArrangement = Arrangement.spacedBy(PaddingBig),
+                    horizontalArrangement = Arrangement.spacedBy(PaddingBig)
                 ) {
                     items(count = items.size) { index ->
                         Card(
@@ -72,4 +77,52 @@ fun CardTabLayout(
             }
         }
     }
+}
+@Preview
+@Composable
+fun CardTabLayoutPreview() {
+    CardTabLayout(
+        loading = false,
+        showRetry = false,
+        layoutTitleId = R.string.houses,
+        items = listOf(
+            CardData(
+                title = "Gryffindor",
+                imgUrl = "",
+                emoji = "🦁",
+                onClick = {},
+                favorite = false,
+                addToFavoriteFunction = {},
+                removeFromFavoriteFunction = {}
+            ),
+            CardData(
+                title = "Slytherin",
+                imgUrl = "",
+                emoji = "🐍",
+                onClick = {},
+                favorite = false,
+                addToFavoriteFunction = {},
+                removeFromFavoriteFunction = {}
+            ),
+            CardData(
+                title = "Ravenclaw",
+                imgUrl = "",
+                emoji = "🦅",
+                onClick = {},
+                favorite = false,
+                addToFavoriteFunction = {},
+                removeFromFavoriteFunction = {}
+            ),
+            CardData(
+                title = "Hufflepuff",
+                imgUrl = "",
+                emoji = "🦡",
+                onClick = {},
+                favorite = false,
+                addToFavoriteFunction = {},
+                removeFromFavoriteFunction = {}
+            )
+        ),
+        retryFunction = {}
+    )
 }

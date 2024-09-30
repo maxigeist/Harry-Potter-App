@@ -1,14 +1,12 @@
 package com.example.harry_potter_app.data.house.manager
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.harry_potter_app.components.Toast
 import com.example.harry_potter_app.data.fetchHousesFromApi
 import com.example.harry_potter_app.data.house.type.House
-import com.example.harry_potter_app.remote.storage.FavoriteCharacter
 import com.example.harry_potter_app.remote.storage.FavoriteHouse
 import com.example.harry_potter_app.remote.storage.HarryPotterDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -47,7 +45,6 @@ class HouseDataViewModel @Inject constructor(
         _loadingHouses.value = true
         fetchHousesFromApi(
             onSuccess = {
-                Log.i("Houses", "Houses: $it")
                 viewModelScope.launch {
                     getFavoriteHouses().asFlow().collect { favoriteHouses ->
                         val houses = it.map { house ->
@@ -73,7 +70,7 @@ class HouseDataViewModel @Inject constructor(
         viewModelScope.launch {
             harryPotterDatabase.favoriteHouseDao()
                 .insert(FavoriteHouse(index = houseIndex))
-            toast.makeToast("Added house to favorites")
+            toast.makeToast(context.getString(com.example.harry_potter_app.R.string.added_house_to_favorites))
             retryGetHouses()
 
         }
@@ -83,7 +80,7 @@ class HouseDataViewModel @Inject constructor(
         viewModelScope.launch {
             harryPotterDatabase.favoriteHouseDao()
                 .delete(FavoriteHouse(index = houseIndex))
-            toast.makeToast("Removed house from favorites")
+            toast.makeToast(context.getString(com.example.harry_potter_app.R.string.removed_house_from_favorites))
             retryGetHouses()
         }
     }

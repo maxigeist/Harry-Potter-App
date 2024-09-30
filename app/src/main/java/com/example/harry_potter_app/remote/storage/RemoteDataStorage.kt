@@ -42,7 +42,7 @@ abstract class HarryPotterDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     HarryPotterDatabase::class.java,
-                    "unscramble_database"
+                    "harry_potter_database"
                 )
                     .addMigrations(MIGRATION_2_3)
                     .build()
