@@ -1,34 +1,45 @@
 package com.example.harry_potter_app.data.favorite.manager
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
+import com.example.harry_potter_app.components.Toast
 import com.example.harry_potter_app.data.character.type.Character
 import com.example.harry_potter_app.data.fetchCharactersFromApi
 import com.example.harry_potter_app.data.fetchHousesFromApi
 import com.example.harry_potter_app.data.house.type.House
 import com.example.harry_potter_app.remote.storage.FavoriteCharacter
 import com.example.harry_potter_app.remote.storage.HarryPotterDatabase
+import com.example.harry_potter_app.security.BiometricAuthManager
+import dagger.assisted.Assisted
+import dagger.assisted.AssistedInject
+import dagger.assisted.AssistedFactory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlinx.coroutines.flow.firstOrNull
 
-@HiltViewModel
-class FavoriteViewModel @Inject constructor(
-    @ApplicationContext val context: Context,
+@HiltViewModel(assistedFactory = FavoriteViewModel.FavoriteViewModelFactory::class)
+class FavoriteViewModel @AssistedInject constructor(
+    @Assisted private val context: Context,
+    @ApplicationContext val applicationContext: Context,
+    val biometricAuthManager: BiometricAuthManager,
 ) : ViewModel() {
 
-    private val harryPotterDatabase = HarryPotterDatabase.getDatabase(context)
+    private var _isAuthenticated = MutableStateFlow(false)
+    val isAuthenticated = _isAuthenticated.asStateFlow()
+    private val harryPotterDatabase = HarryPotterDatabase.getDatabase(applicationContext)
     private var _favoriteCharacters = MutableStateFlow(listOf<Character>())
     val favoriteCharacters = _favoriteCharacters.asStateFlow()
     private var _favoriteBooks = MutableStateFlow("")
     val favoriteBooks = _favoriteBooks.asStateFlow()
+    private val toast = Toast(applicationContext)
+
 
     private var _favoriteHouses = MutableStateFlow(listOf<House>())
     val favoriteHouses = _favoriteHouses.asStateFlow()
@@ -60,7 +71,7 @@ class FavoriteViewModel @Inject constructor(
                 loadingFinished = {
                     _loadingFavorites.value = false
                 },
-                context = context
+                context = applicationContext
             )
         }
     }
@@ -81,7 +92,7 @@ class FavoriteViewModel @Inject constructor(
                 loadingFinished = {
                     _loadingFavorites.value = false
                 },
-                context = context
+                context = applicationContext
             )
         }
     }
@@ -106,4 +117,25 @@ class FavoriteViewModel @Inject constructor(
         getFavoriteHouses()
     }
 
+    fun biometricAuthentication(){
+        Log.i("FavoriteViewModel", "biometricAuthentication called")
+        biometricAuthManager.authenticate(
+            context,
+            onError = {
+                _isAuthenticated.value = false
+                toast.makeToast("An error occurred during the authentication")
+            },
+            onSuccess = {
+                _isAuthenticated.value = true
+            },
+            onFail = {
+                _isAuthenticated.value = false
+                toast.makeToast("Authentication failed")
+            }
+        )
+    }
+    @AssistedFactory
+    interface FavoriteViewModelFactory {
+        fun create(context: Context): FavoriteViewModel
+    }
 }

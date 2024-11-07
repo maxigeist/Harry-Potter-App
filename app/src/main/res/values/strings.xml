@@ -5,12 +5,16 @@
     <string name="characters">Characters</string>
     <string name="favorites">Favorites</string>
     <string name="houses">Houses</string>
+    <string name="books">Books</string>
     <string name="image_description">Card image</string>
     <string name="heart_description">Card heart image</string>
     <string name="cant_get_characters">Can\'t get characters</string>
+    <string name="cant_get_houses">Can\'t get houses</string>
+    <string name="cant_get_books">Can\'t get books</string>
     <string name="added_character_to_favorites">Added character to favorites</string>
     <string name="added_house_to_favorites">Added house to favorites</string>
+    <string name="added_book_to_favorites">Added book to favorites</string>
     <string name="removed_character_from_favorites">Removed character from favorites</string>
     <string name="removed_house_from_favorites">Removed house from favorites</string>
-    <string name="cant_get_houses">Can\'t get houses</string>
+    <string name="removed_book_from_favorites">Removed book from favorites</string>
 </resources>

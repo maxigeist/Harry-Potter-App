@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -23,6 +26,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.harry_potter_app.R
 import com.example.harry_potter_app.ui.theme.CornerShapeRadius
@@ -72,7 +77,12 @@ fun Card(cardData: CardData) {
                         model = cardData.imgUrl,
                         modifier = Modifier
                             .size(ImageSize)
-                            .clip(RoundedCornerShape(topStart = CornerShapeRadius, topEnd = CornerShapeRadius)),
+                            .clip(
+                                RoundedCornerShape(
+                                    topStart = CornerShapeRadius,
+                                    topEnd = CornerShapeRadius
+                                )
+                            ),
                         contentScale = ContentScale.Fit,
                         contentDescription = R.string.image_description.toString(),
                         placeholder = painterResource(R.drawable.outlinewizard),
@@ -80,32 +90,39 @@ fun Card(cardData: CardData) {
                     )
                 }
             }
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceAround,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = cardData.title,
-                    modifier = Modifier.padding(PaddingSmall),
-                    fontSize = MediumFontSize,
-                    fontFamily = FontFamily(
-                        Font(R.font.harry)
-                    ),
-                    color = Color.White
-                )
-                Surface(
-                    onClick = if (cardData.favorite) cardData.removeFromFavoriteFunction else cardData.addToFavoriteFunction,
+                Column(
+                    modifier = Modifier.fillMaxWidth().fillMaxHeight(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                    Image(
-                        painter = painterResource(id = if (cardData.favorite) R.drawable.filledheart else R.drawable.outlinedheart),
-                        modifier = Modifier
-                            .background(MaterialTheme.colorScheme.secondary),
-                        contentDescription = R.string.heart_description.toString(),
+                    Text(
+                        text = cardData.title,
+                        modifier = Modifier.padding(PaddingSmall),
+                        fontSize = MediumFontSize,
+                        fontFamily = FontFamily(
+                            Font(R.font.harry)
+                        ),
+                        color = Color.White
                     )
-                }
-            }
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
 
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .align(Alignment.CenterVertically),
+                            onClick = if (cardData.favorite) cardData.removeFromFavoriteFunction else cardData.addToFavoriteFunction,
+                        ) {
+                            Image(
+                                painter = painterResource(id = if (cardData.favorite) R.drawable.filledheart else R.drawable.outlinedheart),
+                                modifier = Modifier.background(MaterialTheme.colorScheme.secondary),
+                                contentDescription = R.string.heart_description.toString(),
+                            )
+                        }
+                    }
+                }
         }
     }
 }

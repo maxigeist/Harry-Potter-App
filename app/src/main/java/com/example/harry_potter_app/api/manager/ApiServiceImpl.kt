@@ -5,6 +5,7 @@ import android.util.Log
 import retrofit.Call
 import com.example.harry_potter_app.R
 import com.example.harry_potter_app.components.Toast
+import com.example.harry_potter_app.data.book.type.Book
 import com.example.harry_potter_app.data.character.type.Character
 import retrofit.GsonConverterFactory
 import retrofit.Retrofit
@@ -88,6 +89,45 @@ class ApiServiceImpl @Inject constructor() {
             override fun onFailure(t: Throwable?) {
                 val toast = Toast(context)
                 toast.makeToast(context.getString(R.string.cant_get_houses))
+                onFail()
+                loadingFinished()
+            }
+        })
+    }
+
+    fun getBooks(
+        context: Context,
+        onSuccess: (List<Book>) -> Unit,
+        onFail: () -> Unit,
+        loadingFinished: () -> Unit
+    ) {
+        val retrofit: Retrofit = Retrofit.Builder()
+            .baseUrl(
+                context.getString(R.string.api_url)
+            )
+            .addConverterFactory(
+                GsonConverterFactory.create()
+            )
+            .build()
+
+        val service: ApiService = retrofit.create(ApiService::class.java)
+
+        val call: Call<List<Book>> = service.getBooks()
+
+        call.enqueue(object : Callback<List<Book>> {
+            override fun onResponse(response: Response<List<Book>>?, retrofit: Retrofit?) {
+                loadingFinished()
+                if (response?.isSuccess == true) {
+                    val jokes: List<Book> = response.body()
+                    onSuccess(jokes)
+                } else {
+                    onFailure(Exception("Bad request"))
+                }
+            }
+
+            override fun onFailure(t: Throwable?) {
+                val toast = Toast(context)
+                toast.makeToast(context.getString(R.string.cant_get_books))
                 onFail()
                 loadingFinished()
             }
