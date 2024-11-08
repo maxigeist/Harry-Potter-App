@@ -1,10 +1,10 @@
 package com.example.harry_potter_app.data.favorite.manager
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
+import com.example.harry_potter_app.R
 import com.example.harry_potter_app.components.Toast
 import com.example.harry_potter_app.data.book.type.Book
 import com.example.harry_potter_app.data.character.type.Character
@@ -167,19 +167,18 @@ class FavoriteViewModel @AssistedInject constructor(
     }
 
     fun biometricAuthentication(){
-        Log.i("FavoriteViewModel", "biometricAuthentication called")
         biometricAuthManager.authenticate(
             context,
             onError = {
                 _isAuthenticated.value = false
-                toast.makeToast("An error occurred during the authentication")
+                toast.makeToast(context.getString(R.string.an_error_occurred_during_the_authentication))
             },
             onSuccess = {
                 _isAuthenticated.value = true
             },
             onFail = {
                 _isAuthenticated.value = false
-                toast.makeToast("Authentication failed")
+                toast.makeToast(context.getString(R.string.authentication_failed))
             }
         )
     }

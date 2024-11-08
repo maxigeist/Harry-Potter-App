@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.overscroll
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -23,12 +20,17 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import com.example.harry_potter_app.R
 import com.example.harry_potter_app.ui.theme.CornerShapeRadius
 import com.example.harry_potter_app.ui.theme.EmojiFontSize
+import com.example.harry_potter_app.ui.theme.FourDivision
+import com.example.harry_potter_app.ui.theme.PaddingBig
+import com.example.harry_potter_app.ui.theme.PaddingMedium
+import com.example.harry_potter_app.ui.theme.SixDivision
+import com.example.harry_potter_app.ui.theme.SmallFontSize
+import com.example.harry_potter_app.ui.theme.SmallInformationTitleTextSize
 
 
 data class Information(
@@ -44,7 +46,7 @@ fun ItemInformation(information: Information) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.6f)
+                .weight(SixDivision)
         ) {
             if (information.emoji != null) {
                 Box(
@@ -85,14 +87,14 @@ fun ItemInformation(information: Information) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.3f)
-                .padding(16.dp),
-                verticalArrangement = Arrangement.spacedBy(24.dp),
+                .weight(FourDivision)
+                .padding(PaddingMedium),
+                verticalArrangement = Arrangement.spacedBy(PaddingBig),
                 horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = information.name,
-                fontSize = 40.sp,
+                fontSize = SmallInformationTitleTextSize,
                 fontFamily = FontFamily(
                     Font(R.font.harry)
                 )
@@ -100,17 +102,36 @@ fun ItemInformation(information: Information) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(PaddingMedium)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(PaddingMedium)
             ) {
                 information.information.forEach {
                     Text(
                         text = it,
-                        fontSize = 20.sp,
+                        fontSize = SmallFontSize,
+                        fontFamily = FontFamily(
+                            Font(R.font.harry)
+                        )
                     )
                 }
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun ItemInformationPreview() {
+    ItemInformation(
+        information = Information(
+            emoji = "🧙",
+            name = "Harry Potter",
+            information = listOf(
+                "Harry James Potter is a fictional character and the titular protagonist in J. K. Rowling's series of eponymous novels.",
+                "The majority of the books' plot covers seven years in the life of the orphan Harry, who, on his eleventh birthday, learns he is a wizard.",
+                "Thus, he attends Hogwarts School of Witchcraft and Wizardry to practice magic under the guidance of the kindly headmaster Albus Dumbledore and other school professors along with his best friends Ron Weasley and Hermione Granger."
+            )
+        )
+    )
 }

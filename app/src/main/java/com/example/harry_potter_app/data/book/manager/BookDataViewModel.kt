@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.harry_potter_app.components.Toast
 import com.example.harry_potter_app.data.book.type.Book
 import com.example.harry_potter_app.data.fetchBooksFromApi
-import com.example.harry_potter_app.data.fetchCharactersFromApi
 import com.example.harry_potter_app.remote.storage.FavoriteBook
-import com.example.harry_potter_app.remote.storage.FavoriteCharacter
 import com.example.harry_potter_app.remote.storage.HarryPotterDatabase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext

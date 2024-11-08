@@ -6,8 +6,6 @@ import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -28,9 +26,6 @@ import com.example.harry_potter_app.components.CardTabLayout
 import com.example.harry_potter_app.components.SelectBoxProps
 import com.example.harry_potter_app.data.favorite.manager.FavoriteViewModel
 import com.example.harry_potter_app.ui.theme.MediumFontSize
-import com.example.harry_potter_app.ui.theme.PaddingSmall
-import com.example.harry_potter_app.ui.theme.SmallFontSize
-import com.example.harry_potter_app.ui.theme.TabTitleTextSize
 
 
 @Composable
@@ -76,7 +71,7 @@ fun Favorites() {
                     }
                 )
             }
-        } else if (value === "Houses") {
+        } else if (value == "Houses") {
             selectedFavorites = favoriteHouses.mapIndexed { index, house ->
                 CardData(
                     title = house.house,
@@ -91,7 +86,7 @@ fun Favorites() {
                     }
                 )
             }
-        } else if (value === "Books") {
+        } else if (value == "Books") {
             selectedFavorites = favoriteBooks.mapIndexed { index, book ->
                 CardData(
                     title = book.title,

@@ -23,4 +23,8 @@
     <string name="you_cant_use_biometric_auth_until_you_have_updated_your_security_details">You can\'t use biometric auth until you have updated your security details</string>
     <string name="you_cant_use_biometric_auth_with_this_android_version">You can\'t use biometric auth with this Android version</string>
     <string name="you_cant_use_biometric_auth">You can\'t use biometric auth</string>
+    <string name="choose_which_favorite">Choose which favorite</string>
+    <string name="an_error_occurred_during_the_authentication">An error occurred during the authentication</string>
+    <string name="authentication_failed">Authentication failed</string>
+    <string name="biometric_authenticacion">Biometric Authentication</string>
 </resources>

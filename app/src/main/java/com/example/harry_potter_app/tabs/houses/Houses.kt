@@ -1,6 +1,5 @@
 package com.example.harry_potter_app.tabs.houses
 
-import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
