@@ -6,11 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.example.harry_potter_app.components.Toast
+import com.example.harry_potter_app.data.book.type.Book
 import com.example.harry_potter_app.data.character.type.Character
+import com.example.harry_potter_app.data.fetchBooksFromApi
 import com.example.harry_potter_app.data.fetchCharactersFromApi
 import com.example.harry_potter_app.data.fetchHousesFromApi
 import com.example.harry_potter_app.data.house.type.House
+import com.example.harry_potter_app.remote.storage.FavoriteBook
 import com.example.harry_potter_app.remote.storage.FavoriteCharacter
+import com.example.harry_potter_app.remote.storage.FavoriteHouse
 import com.example.harry_potter_app.remote.storage.HarryPotterDatabase
 import com.example.harry_potter_app.security.BiometricAuthManager
 import dagger.assisted.Assisted
@@ -36,8 +40,11 @@ class FavoriteViewModel @AssistedInject constructor(
     private val harryPotterDatabase = HarryPotterDatabase.getDatabase(applicationContext)
     private var _favoriteCharacters = MutableStateFlow(listOf<Character>())
     val favoriteCharacters = _favoriteCharacters.asStateFlow()
-    private var _favoriteBooks = MutableStateFlow("")
+
+    private var _favoriteBooks = MutableStateFlow(
+        listOf<Book>())
     val favoriteBooks = _favoriteBooks.asStateFlow()
+
     private val toast = Toast(applicationContext)
 
 
@@ -53,6 +60,7 @@ class FavoriteViewModel @AssistedInject constructor(
     init {
         getFavoriteCharacters()
         getFavoriteHouses()
+        getFavoriteBooks()
     }
 
 
@@ -97,12 +105,38 @@ class FavoriteViewModel @AssistedInject constructor(
         }
     }
 
+    private fun getFavoriteBooks() {
+        _loadingFavorites.value = true
+        viewModelScope.launch {
+            val favoriteBooksIndexes = getFavoriteBooksIndexesFromRemoteStorage().firstOrNull() ?: listOf()
+
+            fetchBooksFromApi(
+                onSuccess = { books ->
+                    _favoriteBooks.value =
+                        books.filter { book -> favoriteBooksIndexes.contains(book.index) }
+                },
+                onFail = {
+                    _showRetry.value = true
+                },
+                loadingFinished = {
+                    _loadingFavorites.value = false
+                },
+                context = applicationContext
+            )
+        }
+
+    }
+
     private fun getFavoriteCharactersIndexesFromRemoteStorage(): Flow<List<Int>> {
         return harryPotterDatabase.favoriteCharacterDao().getAllCharacters().asFlow()
     }
 
     private fun getFavoriteHousesIndexesFromRemoteStorage(): Flow<List<Int>> {
         return harryPotterDatabase.favoriteHouseDao().getAllHouses().asFlow()
+    }
+
+    private fun getFavoriteBooksIndexesFromRemoteStorage(): Flow<List<Int>> {
+        return harryPotterDatabase.favoriteBookDao().getAllBooks().asFlow()
     }
 
     fun removeCharacterFromFavorites(characterIndex: Int) {
@@ -112,9 +146,24 @@ class FavoriteViewModel @AssistedInject constructor(
         }
     }
 
+    fun removeBookFromFavorites(bookIndex: Int) {
+        viewModelScope.launch {
+            harryPotterDatabase.favoriteBookDao().delete(FavoriteBook(index = bookIndex))
+            getFavoriteBooks()
+        }
+    }
+
+    fun removeHouseFromFavorites(houseIndex: Int) {
+        viewModelScope.launch {
+            harryPotterDatabase.favoriteHouseDao().delete(FavoriteHouse(index = houseIndex))
+            getFavoriteHouses()
+        }
+    }
+
     fun retryGetFavorites() {
         getFavoriteCharacters()
         getFavoriteHouses()
+        getFavoriteBooks()
     }
 
     fun biometricAuthentication(){

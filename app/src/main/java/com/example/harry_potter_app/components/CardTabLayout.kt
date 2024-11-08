@@ -16,8 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+
 import com.example.harry_potter_app.R
 import com.example.harry_potter_app.ui.theme.PaddingBig
 import com.example.harry_potter_app.ui.theme.PaddingMedium
@@ -31,7 +30,8 @@ fun CardTabLayout(
     showRetry: Boolean,
     layoutTitleId: Int,
     items: List<CardData>,
-    retryFunction: () -> Unit
+    retryFunction: () -> Unit,
+    selectBoxProps: SelectBoxProps? = null
 ) {
 
     if (loading) {
@@ -50,6 +50,7 @@ fun CardTabLayout(
             modifier = Modifier.fillMaxSize()
         ) {
             Column(
+                verticalArrangement = Arrangement.spacedBy(PaddingMedium),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
@@ -61,6 +62,11 @@ fun CardTabLayout(
                         Font(R.font.harry)
                     ),
                 )
+                if (selectBoxProps !== null) {
+                    SelectBox(
+                        props = selectBoxProps
+                    )
+                }
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),

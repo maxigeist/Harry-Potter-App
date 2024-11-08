@@ -17,4 +17,10 @@
     <string name="removed_character_from_favorites">Removed character from favorites</string>
     <string name="removed_house_from_favorites">Removed house from favorites</string>
     <string name="removed_book_from_favorites">Removed book from favorites</string>
+    <string name="you_need_to_authenticate">You need to authenticate</string>
+    <string name="this_phone_is_not_prepared_for_biometric_features">This phone is not prepared for biometric features</string>
+    <string name="biometric_auth_is_unavailable">Biometric auth is unavailable</string>
+    <string name="you_cant_use_biometric_auth_until_you_have_updated_your_security_details">You can\'t use biometric auth until you have updated your security details</string>
+    <string name="you_cant_use_biometric_auth_with_this_android_version">You can\'t use biometric auth with this Android version</string>
+    <string name="you_cant_use_biometric_auth">You can\'t use biometric auth</string>
 </resources>
