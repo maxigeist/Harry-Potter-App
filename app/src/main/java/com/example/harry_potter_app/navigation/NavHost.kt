@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.harry_potter_app.tabs.books.Books
 import com.example.harry_potter_app.tabs.characters.Characters
 import com.example.harry_potter_app.tabs.favorites.Favorites
 import com.example.harry_potter_app.tabs.houses.Houses
@@ -30,7 +31,7 @@ fun NavHostComposable(innerPadding: PaddingValues, navController: NavHostControl
             Houses()
         }
         composable(route = HarryPotterScreen.Books.name) {
-            //TODO component books
+            Books()
         }
         composable(route = HarryPotterScreen.Favorites.name) {
             Favorites()

@@ -2,8 +2,6 @@ package com.example.harry_potter_app.components
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 

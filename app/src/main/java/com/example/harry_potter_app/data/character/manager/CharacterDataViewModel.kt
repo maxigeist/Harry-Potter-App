@@ -1,12 +1,10 @@
 package com.example.harry_potter_app.data.character.manager
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.example.harry_potter_app.api.manager.ApiServiceImpl
 import com.example.harry_potter_app.components.Toast
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

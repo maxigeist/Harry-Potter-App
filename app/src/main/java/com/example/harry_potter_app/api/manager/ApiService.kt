@@ -1,5 +1,6 @@
 package com.example.harry_potter_app.api.manager
 
+import com.example.harry_potter_app.data.book.type.Book
 import retrofit.http.GET
 import retrofit.Call
 import com.example.harry_potter_app.data.character.type.Character
@@ -12,4 +13,7 @@ interface ApiService {
 
     @GET("houses")
     fun getHouses(): Call<List<House>>
+
+    @GET("books")
+    fun getBooks(): Call<List<Book>>
 }

@@ -1,4 +1,4 @@
-package com.example.harry_potter_app.tabs.houses
+package com.example.harry_potter_app.tabs.books
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -12,29 +12,29 @@ import com.example.harry_potter_app.components.CardData
 import com.example.harry_potter_app.components.CardTabLayout
 import com.example.harry_potter_app.components.Information
 import com.example.harry_potter_app.components.ItemInformation
-import com.example.harry_potter_app.data.house.manager.HouseDataViewModel
-import com.example.harry_potter_app.data.house.type.House
-
+import com.example.harry_potter_app.data.book.manager.BookDataViewModel
+import com.example.harry_potter_app.data.book.type.Book
 
 @Composable
-fun Houses() {
-    val viewModel = hiltViewModel<HouseDataViewModel>()
-    var selectedHouse by remember { mutableStateOf<House?>(null) }
+fun Books() {
 
-    val houses by viewModel.houses.collectAsState()
-    val loading by viewModel.loadingHouses.collectAsState()
+    val viewModel = hiltViewModel<BookDataViewModel>()
+    val books by viewModel.books.collectAsState()
+    val loading by viewModel.loadingBooks.collectAsState()
     val showRetry by viewModel.showRetry.collectAsState()
 
-    if(selectedHouse !== null){
-        selectedHouse?.let { house ->
+    var selectedBook by remember { mutableStateOf<Book?>(null) }
+
+    if(selectedBook !== null){
+        selectedBook?.let { book ->
             ItemInformation(
                 Information(
-                    emoji = house.emoji,
-                    name = house.house,
+                    image = book.cover,
+                    name = book.title,
                     information = listOf(
-                        "Founder: ${house.founder}",
-                        "Colors: ${house.colors.joinToString(", ")}",
-                        "Animal: ${house.animal}"
+                        "Release date: ${book.releaseDate}",
+                        "Pages: ${book.pages}",
+                        "Description: ${book.description}"
                     )
                 )
             )
@@ -44,31 +44,28 @@ fun Houses() {
         CardTabLayout(
             loading = loading,
             showRetry = showRetry,
-            layoutTitleId = R.string.houses,
+            layoutTitleId = R.string.books,
 
-            items = houses.mapIndexed { index, house ->
+            items = books.mapIndexed { index, book ->
                 CardData(
-                    title = house.house,
-                    emoji = house.emoji,
-                    imgUrl = "",
+                    title = book.title,
+                    imgUrl = book.cover,
                     onClick = {
-                        selectedHouse = house
+                        selectedBook = book
                     },
-                    favorite = house.favorite,
+                    favorite = book.favorite,
                     addToFavoriteFunction = {
-                        viewModel.addHouseToFavorites(house.index)
+                        viewModel.addBookToFavorites(book.index)
                     },
                     removeFromFavoriteFunction = {
-                        viewModel.removeHouseFromFavorites(house.index)
+                        viewModel.removeBookFromFavorites(book.index)
                     }
                 )
             },
             retryFunction = {
-                viewModel.retryGetHouses()
+                viewModel.retryGettingBooks()
             }
         )
     }
-
-
 
 }

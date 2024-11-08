@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Aplicación Harry-Potter</string>
+    <string name="api_url">https://potterapi-fedeperin.vercel.app/es/</string>
+    <string name="retry">Intente realizar la solicitud nuevamente</string>
+    <string name="characters">Personajes</string>
+    <string name="favorites">Favoritos</string>
+    <string name="houses">Casas</string>
+    <string name="books">Libros</string>
+    <string name="image_description">Imagen de la tarjeta</string>
+    <string name="heart_description">Imagen del corazón de la tarjeta</string>
+    <string name="cant_get_characters">No puedo conseguir personajes</string>
+    <string name="cant_get_houses">No puedo conseguir casas</string>
+    <string name="cant_get_books">No puedo conseguir libros</string>
+    <string name="added_character_to_favorites">Personaje añadido a favoritos.</string>
+    <string name="added_house_to_favorites">Casa agregada a favoritos</string>
+    <string name="added_book_to_favorites">Libro añadido a favoritos</string>
+    <string name="removed_character_from_favorites">Personaje eliminado de favoritos.</string>
+    <string name="removed_house_from_favorites">Casa eliminada de favoritos</string>
+    <string name="removed_book_from_favorites">Libro eliminado de favoritos</string>
+    <string name="you_need_to_authenticate">Necesitas autentificarte</string>
+    <string name="this_phone_is_not_prepared_for_biometric_features">Este teléfono no está preparado para funciones biométricas.</string>
+    <string name="biometric_auth_is_unavailable">La autenticación biométrica no está disponible</string>
+    <string name="you_cant_use_biometric_auth_until_you_have_updated_your_security_details">No puede utilizar la autenticación biométrica hasta que haya actualizado sus datos de seguridad</string>
+    <string name="you_cant_use_biometric_auth_with_this_android_version">No puedes usar la autenticación biométrica con esta versión de Android</string>
+    <string name="you_cant_use_biometric_auth">No puedes usar autenticación biométrica</string>
+    <string name="choose_which_favorite">Elige cual favorito</string>
+    <string name="an_error_occurred_during_the_authentication">Se produjo un error durante la autenticación.</string>
+    <string name="authentication_failed">Error de autenticación</string>
+    <string name="biometric_authenticacion">Autenticación biométrica</string>
+</resources>

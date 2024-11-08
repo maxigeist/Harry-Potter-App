@@ -15,3 +15,9 @@ data class FavoriteHouse(
     @PrimaryKey
     val index:Int,
 )
+
+@Entity(tableName = "FavoriteBooks")
+data class FavoriteBook(
+    @PrimaryKey
+    val index:Int,
+)

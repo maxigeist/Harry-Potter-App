@@ -7,10 +7,11 @@ import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-val MIGRATION_2_3 = object : Migration(2, 3) {
+val MIGRATION_3_4 = object : Migration(3,4) {
     override fun migrate(database: SupportSQLiteDatabase) {
         database.execSQL("DROP TABLE IF EXISTS FavoriteHouses")
         database.execSQL("DROP TABLE IF EXISTS FavoriteCharacters")
+        database.execSQL("DROP TABLE IF EXISTS FavoriteBooks")
         database.execSQL(
             """
             CREATE TABLE IF NOT EXISTS FavoriteHouses (
@@ -25,13 +26,21 @@ val MIGRATION_2_3 = object : Migration(2, 3) {
             )
             """.trimIndent()
         )
+        database.execSQL(
+            """
+            CREATE TABLE IF NOT EXISTS FavoriteBooks (
+                `index` INTEGER PRIMARY KEY NOT NULL
+            )
+            """.trimIndent()
+        )
     }
 }
 
-@Database(entities = [FavoriteCharacter::class, FavoriteHouse::class], version = 3)
+@Database(entities = [FavoriteCharacter::class, FavoriteHouse::class, FavoriteBook::class], version = 4)
 abstract class HarryPotterDatabase : RoomDatabase() {
     abstract fun favoriteCharacterDao(): FavoriteCharacterDao
     abstract fun favoriteHouseDao(): FavoriteHouseDao
+    abstract fun favoriteBookDao(): FavoriteBookDao
 
     companion object {
         @Volatile
@@ -44,7 +53,7 @@ abstract class HarryPotterDatabase : RoomDatabase() {
                     HarryPotterDatabase::class.java,
                     "harry_potter_database"
                 )
-                    .addMigrations(MIGRATION_2_3)
+                        .addMigrations(MIGRATION_3_4)
                     .build()
                 INSTANCE = instance
                 instance
